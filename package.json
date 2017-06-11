@@ -1,0 +1,22 @@
+{
+  "name": "ty-open",
+  "version": "1.0.0",
+  "description": "Site Favorites For Terminal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "to": "./bin/ty-open"
+  },
+  "keywords": [],
+  "author": "tingyuan",
+  "license": "MIT",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "url-regex": "^4.1.0",
+    "opn": "^5.0.0"
+  }
+}
