@@ -7,7 +7,7 @@
 * 添加一个站点, `to add <site_name> <site_url> [arguments] [options]`
   * to add npm "https://www.npmjs.com"
   * to add npm www.npmjs.com -s, 当缺少协议时-s选项会自动加上https协议，否则是http
-  * to add npm.pkg "https://www.npmjs.com/package/ ", 命令的参数会依次替换空格部分, 例如 to npm.pkg http-server会打开https://www.npmjs.com/package/http-server,可以使用多个空格定义多个可变参数
+  * to add npm.pkg "https://www.npmjs.com/package/ ", 命令的参数会依次替换空格部分, 例如 to npm.pkg http-server会打开https://www.npmjs.com/package/http-server, 可以使用多个空格定义多个可变参数
   * to add npm "https://www.npmjs.com" -d, -d选项用来设置缺少可变参数时访问的url
   * to add npm "https://www.npmjs.com/search?q= ", 这两条虽然都使用了npm作为站点名称，但是-d选项仅仅会在没有可变参数时才会有效，例如to npm 会进入npm的主页，to npm http-server 会进入搜索页
   * to add home "https://tingyuan.me/" // home可以指定主页，当仅仅使用to命令时会打开主页
