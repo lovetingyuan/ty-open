@@ -12,11 +12,12 @@
   "keywords": [],
   "author": "tingyuan",
   "license": "MIT",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
+    "chalk": "^2.0.1",
     "minimist": "^1.2.0",
-    "url-regex": "^4.1.0",
-    "opn": "^5.0.0"
+    "node-emoji": "^1.5.1",
+    "opn": "^5.0.0",
+    "url-regex": "^4.1.0"
   }
 }

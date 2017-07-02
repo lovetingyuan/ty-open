@@ -11,6 +11,7 @@
   * to add npm "https://www.npmjs.com" -d, -d选项用来设置缺少可变参数时访问的url
   * to add npm "https://www.npmjs.com/search?q= ", 这两条虽然都使用了npm作为站点名称，但是-d选项仅仅会在没有可变参数时才会有效，例如to npm 会进入npm的主页，to npm http-server 会进入搜索页
   * to add home "https://tingyuan.me/" // home可以指定主页，当仅仅使用to命令时会打开主页
+  * to add loc localhost:8080 -f // -f选项会忽略校验url并强制添加
 * 删除一个站点
   * to rm // 如果不指定站点名称则会删除所有的站点，-f不生效
   * to rm npm.pkg -f // -f选项不会提示，直接删除
