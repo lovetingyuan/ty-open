@@ -20,7 +20,8 @@ const funcs = require('./src/main')
 const actions = {
   add,
   rm,
-  ls
+  ls,
+  bak
 } = funcs
 const { visit } = funcs
 

@@ -4,7 +4,10 @@
   "description": "Site Favorites For Terminal",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "lint": "eslint -c package.json ./src --fix --no-eslintrc",
+    "help": "ty-help"
   },
   "bin": {
     "to": "./bin/ty-open"
@@ -12,12 +15,36 @@
   "keywords": [],
   "author": "tingyuan",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.5.2",
+    "eslint": "3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.1",
+    "eslint-plugin-react": "7.0.1",
+    "ty-help": "^1.0.4"
+  },
   "dependencies": {
     "chalk": "^2.0.1",
     "minimist": "^1.2.0",
     "node-emoji": "^1.5.1",
     "opn": "^5.0.0",
     "url-regex": "^4.1.0"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "env":{
+      "es6": true,
+      "node": true
+    },
+    "rules": {
+      "no-plusplus": "off"
+    }
   }
 }

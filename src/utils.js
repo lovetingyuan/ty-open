@@ -1,11 +1,16 @@
-const readline = require('readline')
-const chalk = require('chalk')
+const readline = require('readline');
+const chalk = require('chalk');
 
-function handleError(errorMsg) {
-  log('Sorry, ' + errorMsg, 'error')
-  showUsage()
-  process.exit(-1)
+function log(content, type = 'info') {
+  const print = {
+    error: chalk.red,
+    success: chalk.green,
+    warning: chalk.yellow,
+    info: chalk.white,
+  };
+  console.log(print[type](content)); // eslint-disable-line no-console
 }
+
 
 function showUsage() {
   const help = ` 
@@ -25,48 +30,45 @@ function showUsage() {
         -c, --children, only delete the children sites under the namespace 
   when command is the site name or a valid url, will open the default browser directly 
   eg: to npm, will open "https://www.npmjs.com" 
-  `
-  log(help)
+  `;
+  log(help);
+}
+
+function handleError(errorMsg) {
+  log(`Sorry, ${errorMsg}`, 'error');
+  showUsage();
+  process.exit(-1);
 }
 
 function onlyHas(keyList, obj) {
-  const keys = Object.keys(obj)
+  const keys = Object.keys(obj);
   for (let i = 0; i < keys.length; i++) {
-    if (keyList.indexOf(keys[i]) === -1) return false
+    if (keyList.indexOf(keys[i]) === -1) return false;
   }
-  return true
+  return true;
 }
 
 function prompt(question, callback) {
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
 
-  const cb = function(result) {
+  const cb = function cb(result) {
     if (!result) {
-      callback(false)
+      callback(false);
     } else {
-      result = result.toLowerCase()
-      callback(result === 'y' || result === 'yes')
+      const answer = result.toLowerCase();
+      callback(answer === 'y' || answer === 'yes');
     }
-  }
+  };
 
-  rl.question(question, function (answer) {
-    rl.close()
-    cb(answer)
+  rl.question(question, (answer) => {
+    rl.close();
+    cb(answer);
   });
 }
 
-function log(content, type = 'info') {
-  const print = {
-    error: chalk.red,
-    success: chalk.green,
-    warning: chalk.yellow,
-    info: console.log
-  }
-  print[type](content);
-}
 
 module.exports = {
   handleError,
@@ -74,4 +76,4 @@ module.exports = {
   onlyHas,
   prompt,
   log,
-}
+};
