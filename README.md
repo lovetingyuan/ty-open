@@ -1,4 +1,4 @@
-### ty-open
+##ty-open
 
 ### install
 `npm install ty-open -g`
