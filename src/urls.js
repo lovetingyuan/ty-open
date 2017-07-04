@@ -23,6 +23,7 @@ function checkUrl(url = '', force) {
       log(`warning: your url: [${url}] seems to be invalid`, 'warning');
     }
   }
+  return true;
 }
 
 module.exports = {

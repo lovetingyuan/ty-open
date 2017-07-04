@@ -165,4 +165,5 @@ module.exports = {
   bak,
   res,
   visit,
+  subCmds,
 };

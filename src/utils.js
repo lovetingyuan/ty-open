@@ -12,7 +12,6 @@ function log(content, type = 'info') {
   console.log(print[type](content)); // eslint-disable-line no-console
 }
 
-
 function showUsage() {
   const help = ` 
 usage: to [command] [args...] [options] 
