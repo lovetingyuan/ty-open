@@ -28,7 +28,7 @@ when command is the site name or a valid url, will open the default browser dire
 eg: to npm, will open "https://www.npmjs.com" 
 ```
 
-**notice: 'add', 'rm', 'ls', 'bak' and 'res' are retained for this command, you can not use them as a site name, eg: `to add rm "https://..."` is invalid**
+**notice: `add`, `rm`, `ls`, `bak` and `res` are retained for this command, you can not use them as a site name, eg: `to add rm "https://..."` is invalid**
 
 ### license
 MIT
