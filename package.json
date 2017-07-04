@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "node ./change-pkg.js config.base ./lib",
     "build": "babel src -d lib",
     "lint": "eslint -c package.json ./src --fix --no-eslintrc",
     "help": "ty-help"
@@ -62,5 +63,8 @@
     "rules": {
       "no-plusplus": "off"
     }
+  },
+  "config": {
+    "base": "./lib"
   }
 }
