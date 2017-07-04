@@ -3,6 +3,7 @@
  */
 const minimist = require('minimist');
 const pkg = require('../package.json');
+const configure = require('./config').configure;
 
 const {
   showUsage,
@@ -27,6 +28,7 @@ module.exports = function start(argvs) {
   const noOptions = args._.slice(1);
   delete args._;
   const options = args;
+  configure(); // init config file
   if (!command) {
     if (Object.keys(options).length === 0) {
       visit('home');
