@@ -5,12 +5,12 @@ const fs = require('fs');
 const path = require('path');
 const handleError = require('./utils').handleError;
 const pkg = require('../package.json');
+const Ajv = require('ajv');
 
 const configFilePath = path.resolve(__dirname, './config.json');
 /**
  * get config or write config
  * newConfig: Object, the new config obj to write
- *
  */
 
 const defaultConfig = {
@@ -20,6 +20,38 @@ const defaultConfig = {
       sub: {},
       url: 'https://google.com/search?q= ',
       default: 'https://google.com/',
+    },
+  },
+};
+
+const configSchema = {
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    version: {
+      type: 'string',
+      format: 'regex',
+      pattern: '^(\\d+\\.)?(\\d+\\.)?\\d+$',
+    },
+    sites: {
+      type: 'object',
+      id: 'sites',
+      additionalProperties: {
+        type: 'object',
+        properties: {
+          sub: {
+            $ref: 'sites',
+          },
+          url: {
+            type: 'string',
+          },
+          default: {
+            type: 'string',
+          },
+        },
+        required: ['url'],
+        additionalProperties: false,
+      },
     },
   },
 };
@@ -63,8 +95,14 @@ function copyConfig(_path) {
   return distDir;
 }
 
+function checkConfig(config) {
+  const ajv = new Ajv();
+  return ajv.validate(configSchema, config);
+}
+
 module.exports = {
   configure,
   resetConfig,
   copyConfig,
+  checkConfig,
 };

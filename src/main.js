@@ -2,11 +2,13 @@ const {
   configure,
   resetConfig,
   copyConfig,
+  checkConfig,
 } = require('./config');
 const {
   handleError,
   prompt,
   log,
+  mergeDeep,
 } = require('./utils');
 const {
   hasProtocol,
@@ -24,6 +26,8 @@ const {
   list,
 } = require('./list');
 
+const subCmds = ['ls', 'add', 'rm', 'bak', 'res'];
+
 /**
  * to add a site
  * options:
@@ -37,18 +41,12 @@ function add(args, opts) {
   const name = args[0];
   let url = args[1];
   if (!name || !url) handleError('you can not add a site without "name" or "url"');
-  if (['ls', 'add', 'rm'].indexOf(name) !== -1) {
-    handleError('sorry, you can not use "ls" or "add" or "rm" or "bak" as a site name');
+  if (subCmds.indexOf(name) !== -1) {
+    handleError(`you can not use ${subCmds.map(v => `"${v}"`).join(' or ')} as a site name`);
   }
   checkUrl(url, opts.f || opts.force);
   const config = configure();
-  if (!hasProtocol(url)) {
-    if (opts.s || opts.ssl) {
-      url = `https://${url}`;
-    } else {
-      url = `http://${url}`;
-    }
-  }
+  url = hasProtocol(url) ? url : `http${(opts.s || opts.ssl) ? 's' : ''}://${url}`;
   setValue(name, config.sites, url, opts.d || opts.default);
   configure(config);
   log(`have added the site ${name}`, 'success');
@@ -130,12 +128,34 @@ function ls(args, opts) {
  * @param {array} args
  */
 function bak(args) {
-  const path = args[0];
-  if (!path) {
-    handleError('you must specify a directory to save the config file');
-  }
-  const dist = copyConfig(path);
+  const dist = copyConfig(args[0] || process.cwd());
   log(`the config file has been save to ${dist}`, 'success');
+}
+
+function res(args, opts) {
+  const configPath = args[0];
+  try {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    const restoreConfig = require(configPath);
+    if (!checkConfig(restoreConfig)) {
+      handleError('invalid config format!');
+    }
+    if (opts.m || opts.merge) {
+      const config = configure();
+      configure(mergeDeep(config, restoreConfig));
+      log('the config file has been saved', 'success');
+    } else {
+      prompt('are you sure to cover current sites?(y/n)', (yes) => {
+        if (yes) {
+          configure(restoreConfig);
+          log('the config file has been saved', 'success');
+        }
+        process.exit(0);
+      });
+    }
+  } catch (e) {
+    handleError(`the config file is invalid, please check the path: ${configPath}`);
+  }
 }
 
 module.exports = {
@@ -143,5 +163,6 @@ module.exports = {
   rm,
   ls,
   bak,
+  res,
   visit,
 };
