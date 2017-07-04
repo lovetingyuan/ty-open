@@ -7,7 +7,7 @@ const handleError = require('./utils').handleError;
 const pkg = require('../package.json');
 const Ajv = require('ajv');
 
-const configFilePath = path.resolve(__dirname, './config.json');
+const configFilePath = path.resolve(__dirname, '../config/config.json');
 /**
  * get config or write config
  * newConfig: Object, the new config obj to write
@@ -49,7 +49,7 @@ const configSchema = {
             type: 'string',
           },
         },
-        required: ['url'],
+        required: ['sub'],
         additionalProperties: false,
       },
     },

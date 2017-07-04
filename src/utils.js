@@ -41,7 +41,7 @@ eg: to npm, will open "https://www.npmjs.com"
 
 function handleError(errorMsg) {
   log(`Sorry, ${errorMsg}`, 'error');
-  showUsage();
+  log('use "to -h" to get help info', 'info');
   process.exit(-1);
 }
 

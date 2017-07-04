@@ -1,3 +1,4 @@
+const path = require('path');
 const {
   configure,
   resetConfig,
@@ -133,7 +134,10 @@ function bak(args) {
 }
 
 function res(args, opts) {
-  const configPath = args[0];
+  if (!args[0]) {
+    handleError('you must specify the config file path');
+  }
+  const configPath = path.resolve(process.cwd(), args[0]);
   try {
     // eslint-disable-next-line global-require, import/no-dynamic-require
     const restoreConfig = require(configPath);
