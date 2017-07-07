@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var pkg = require('./package.json');
 var path = require('path');
 

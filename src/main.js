@@ -64,7 +64,7 @@ function visit(name, args) {
   }
   const config = configure();
   const site = getValue(name, config.sites);
-  let url = site.url;
+  let url = site.url || '';
   const def = site.default || url;
   if (args.length) {
     for (let i = 0; i < args.length; i++) {
@@ -72,6 +72,9 @@ function visit(name, args) {
     }
   } else {
     url = def || url;
+  }
+  if (!url) {
+    handleError(`no url for site: ${name}, please use "to add ${name}" to specify it`);
   }
   open(url);
 }

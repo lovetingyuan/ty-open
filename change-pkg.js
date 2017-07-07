@@ -1,14 +1,14 @@
 #! /usr/bin/env node
 
+/* eslint-disable */
 var fs = require('fs');
 
 try {
   var pkg = require('./package.json');
   var keyPath = process.argv[2];
-  var value = process.argv[3];
-  if (!keyPath || !value) {
-    console.log('you must specify key and value to be updated');
-    process.exit(-1);
+  var value = process.argv[3] || '';
+  if (!keyPath) {
+    throw new Error('you must specify the key in package.json to be updated');
   }
   var keyList = keyPath.split('.'), key, val = pkg;
   for (var i = 0; i < keyList.length; i++) {
@@ -17,7 +17,7 @@ try {
       try {
         val[key] = eval('(' + value + ')');
       } catch (e) {
-        console.log('warning: fail to change value to JSON')
+        console.warn('warning: fail to change value to JSON');
         val[key] = value;
       }
     } else {
@@ -31,6 +31,6 @@ try {
   fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2));
   console.log('package.json has been updated');
 } catch(e) {
-  console.log('Error: failed to update package.json', e);
+  console.error('Error: failed to update package.json', e);
   process.exit(-1);
 }
