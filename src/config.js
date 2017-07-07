@@ -7,7 +7,6 @@ const handleError = require('./utils').handleError;
 const pkg = require('../package.json');
 const Ajv = require('ajv');
 
-const configFilePath = path.resolve(__dirname, '../config/config.json');
 /**
  * get config or write config
  * newConfig: Object, the new config obj to write
@@ -23,6 +22,15 @@ const defaultConfig = {
     },
   },
 };
+
+const configDirPath = path.resolve(__dirname, '../config');
+const configFilePath = path.resolve(configDirPath, 'config.json');
+if (!fs.existsSync(configDirPath)) {
+  fs.mkdirSync(configDirPath);
+  fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
+} else if (!fs.existsSync(configFilePath)) {
+  fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
+}
 
 const configSchema = {
   type: 'object',
@@ -62,12 +70,8 @@ const configSchema = {
  */
 function configure(newConfig) {
   if (!newConfig) {
-    if (fs.existsSync(configFilePath)) {
-      // eslint-disable-next-line import/no-dynamic-require, global-require
-      return require(configFilePath);
-    }
-    fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
-    return defaultConfig;
+    // eslint-disable-next-line import/no-dynamic-require, global-require
+    return require(configFilePath);
   }
   fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 2));
   return null;
