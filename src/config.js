@@ -2,6 +2,7 @@
  * to write and read config file
  */
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const handleError = require('./utils').handleError;
 const pkg = require('../package.json');
@@ -23,12 +24,8 @@ const defaultConfig = {
   },
 };
 
-const configDirPath = path.resolve(__dirname, '../config');
-const configFilePath = path.resolve(configDirPath, 'config.json');
-if (!fs.existsSync(configDirPath)) {
-  fs.mkdirSync(configDirPath);
-  fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
-} else if (!fs.existsSync(configFilePath)) {
+const configFilePath = path.resolve(os.homedir(), '.sitesConfig.json');
+if (!fs.existsSync(configFilePath)) {
   fs.writeFileSync(configFilePath, JSON.stringify(defaultConfig, null, 2));
 }
 
