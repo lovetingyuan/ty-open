@@ -17,15 +17,11 @@ try {
       try {
         val[key] = eval('(' + value + ')');
       } catch (e) {
-        console.warn('warning: fail to change value to JSON');
+        console.warn('warning: fail to change value ' + value + ' to JSON');
         val[key] = value;
       }
     } else {
-      if (!(key in val)) {
-        val = val[key] = {};
-      } else {
-        val = val[key];
-      }
+      val = key in val ? val[key] : {};
     }
   }
   fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2));
