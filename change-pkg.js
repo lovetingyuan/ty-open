@@ -21,7 +21,11 @@ try {
         val[key] = value;
       }
     } else {
-      val = key in val ? val[key] : {};
+      if (!(key in val)) {
+        val = val[key] = {};
+      } else {
+        val = val[key];
+      }
     }
   }
   fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2));
